@@ -1,6 +1,6 @@
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
-const getApiKey = () => process.env.TMDB_API_KEY || process.env.VITE_TMDB_API_KEY || '';
+const getApiKey = () => import.meta.env.TMDB_API_KEY || import.meta.env.VITE_TMDB_API_KEY || '';
 
 export default async function handler(request, response) {
   if (request.method !== 'GET') {
