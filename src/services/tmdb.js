@@ -1,25 +1,39 @@
 import axios from 'axios';
 
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3';
+const DEV_API_KEY = import.meta.env.DEV ? import.meta.env.VITE_TMDB_API_KEY : '';
+const USE_DIRECT_TMDB = Boolean(DEV_API_KEY);
 
 const tmdbClient = axios.create({
-  baseURL: BASE_URL,
-  params: {
-    api_key: API_KEY,
-    language: 'en-US',
-  },
+  baseURL: USE_DIRECT_TMDB ? BASE_URL : '/api/tmdb',
 });
 
-const ensureApiKey = () => {
-  if (!API_KEY || API_KEY === 'your_key_here') {
-    throw new Error('Missing TMDB API key. Add VITE_TMDB_API_KEY to your .env file.');
+const ensureLocalApiKey = () => {
+  if (!DEV_API_KEY || DEV_API_KEY === 'your_key_here') {
+    throw new Error('Missing TMDB API key. Add VITE_TMDB_API_KEY to your local .env file.');
   }
 };
 
 const request = async (url, params = {}) => {
-  ensureApiKey();
-  const { data } = await tmdbClient.get(url, { params });
+  const requestParams = USE_DIRECT_TMDB
+    ? {
+        ...params,
+        api_key: DEV_API_KEY,
+        language: 'en-US',
+      }
+    : {
+        path: url,
+        ...params,
+      };
+
+  if (USE_DIRECT_TMDB) {
+    ensureLocalApiKey();
+  }
+
+  const { data } = await tmdbClient.get(USE_DIRECT_TMDB ? url : '', {
+    params: requestParams,
+  });
+
   return data;
 };
 
