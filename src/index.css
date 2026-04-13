@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Sora:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    @apply border-stroke;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-canvas font-body text-white antialiased;
+    background-color: #070707;
+  }
+
+  a {
+    @apply text-inherit no-underline;
+  }
+
+  img {
+    @apply block max-w-full;
+  }
+
+  ::selection {
+    @apply bg-accent/40 text-white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(20, 20, 22, 0.9);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(185, 28, 28, 0.34);
+    border-radius: 999px;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply rounded-[26px] border border-white/[0.08] bg-panel/90 backdrop-blur-md;
+  }
+
+  .section-shell {
+    @apply glass-panel shadow-card;
+  }
+
+  .button-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(185,28,28,0.18)] transition duration-300 hover:bg-accent-soft focus:outline-none focus:ring-2 focus:ring-accent/70 focus:ring-offset-2 focus:ring-offset-canvas;
+  }
+
+  .button-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.08] bg-panel-soft px-5 py-3 text-sm font-semibold text-white/90 transition duration-300 hover:border-accent/40 hover:bg-black focus:outline-none focus:ring-2 focus:ring-accent/50 focus:ring-offset-2 focus:ring-offset-canvas;
+  }
+
+  .input-shell {
+    @apply flex items-center gap-3 rounded-full border border-white/[0.08] bg-panel-soft px-4 py-3 text-sm text-white shadow-glow transition duration-300 focus-within:border-accent/60 focus-within:bg-black;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-white/[0.08] bg-black px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-mist transition duration-300;
+  }
+
+  .chip-active {
+    @apply border-accent/80 bg-accent text-white;
+  }
+}
